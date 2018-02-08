@@ -5,8 +5,8 @@ const express = require('express'),
 router
   .route('/drawings')
   .get(drawings.fetch)
-  .post(drawings.add)
-  .delete(drawings.del)
-  .put(drawings.modif);
+  .post(drawings.verify, drawings.add)
+  .delete(drawings.verify, drawings.del)
+  .put(drawings.verify, drawings.modif);
 
 module.exports = router;

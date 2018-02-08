@@ -28,6 +28,7 @@ fs.readdirSync('./server/assets')
     console.log(name)
     let file = {
       name,
+      filename: `${name}.json`,
       path: e,
       category: 'erosion',
       description: '',

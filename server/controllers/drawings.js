@@ -1,6 +1,8 @@
 const fs = require('fs');
 const http = require('http');
+const jwt = require('jsonwebtoken');
 const path = require('path');
+const p = require('../bail/.ps.json');
 
 exports.fetch = (req, res, next) => {
   let meta = require('../assets/metaDraw.js')();
@@ -20,11 +22,9 @@ exports.del = (req, res, next) => {
 };
 
 exports.modif = (req, res, next) => {
-  console.log('modif called');
-  console.log(JSON.stringify(req.body));
-  let tmpFile = `./server/assets/${Math.random() * (200 - 2) + 2}.json`;
-  fs.writeFileSync(req.body.name, JSON.stringify(req.body));
-  // fs.rename(tmpFile, req.body.name);
+  let tmpFile = `assets/${Math.random() * (200 - 2) + 2}.json`;
+  fs.writeFileSync(tmpFile, JSON.stringify(req.body));
+  fs.renameSync(tmpFile, `assets/${req.body.filename}`);
   res.send('Modified Succesfully');
 };
 
@@ -36,7 +36,7 @@ exports.add = (req, res, next) => {
   const data = req.body.img.replace(/^data:image\/\w+;base64,/, '');
   const buf = new Buffer(data, 'base64');
   const newFile = `assets/${req.body.name}.jpg`;
-  const metaFile = `http://localhost:4200/d/${req.body.name}.jpg`;
+  const metaFile = `${req.body.name}.jpg`;
   fs.writeFileSync(newFile, buf);
   addMeta({
       name: req.body.name,
@@ -48,3 +48,19 @@ exports.add = (req, res, next) => {
   );
   res.send('Succesfully saved');
 };
+
+exports.verify = (req, res, next) => {
+  const token = req.headers['authorization'];
+  console.log('verify', token);
+  if (!token) {
+    return res.status(401).send({ auth: false, message: 'No token provided.' });
+  }
+  jwt.verify(token, p.pass, (err, decoded) => {
+    if (err) {
+      throw ['Jwt failed', err.message]
+    }
+    req.user = {};
+    req.user.id = decoded.user_id;
+    next();
+  })
+}

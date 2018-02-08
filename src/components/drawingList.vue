@@ -10,7 +10,7 @@
     <v-flex class="text-xs-center">
       <v-card align-center>
         <v-card-title>{{d.name}}</v-card-title>
-        <img :src="d.path" />
+        <img :src="d.fpath" />
 
         <!-- <v-card-media :src="d.path"
 			height="200px"></v-card-media> -->

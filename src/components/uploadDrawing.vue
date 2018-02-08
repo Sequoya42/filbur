@@ -1,41 +1,43 @@
 <template>
-	<div>
-<h1>there</h1><br />
-<img v-if="image != ''":src="image"  class="upload"/>
-<br />
-<h1>newdata above</h1>
-<form>
-
-	<input type="file" @change="uploadFile" />
-	<input v-model="meta.name" placeholder="name" />
-	<input v-model="meta.state" placeholder="state" />
-	<div v-for="tag in meta.tags">
-		<input v-model="tag.value" placeholder="tags"/>
-	</div>
-	<button @click="addTag">Add tag</button>
-	<br />
-	<br />
-	<button @click="send">Submit</button>
-</form>
-	</div>
+<div>
+  <h1>there</h1><br />
+  <img v-if="image != ''"
+    :src="image"
+    class="upload" />
+  <br />
+  <h1>newdata above</h1>
+  <form>
+    <input type="file"
+      @change="uploadFile" />
+    <input v-model="meta.name"
+      placeholder="name" />
+    <input v-model="meta.category"
+      placeholder="category" />
+    <input v-model="meta.description"
+      placeholder="description" />
+    <button @click="send">Submit</button>
+  </form>
+</div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import axios from 'axios';
+import {
+  mapGetters,
+  mapActions
+} from 'vuex';
+import axios from '../services/axios';
 export default {
   name: 'uploadDrawing',
 
-  created() {
-    this.meta.name = `untilted_${this.drawLength + 1}`;
-  },
+  created() {},
   data: function() {
     return {
       image: '',
       meta: {
-        name: 'none',
+        name: '',
+        category: '',
+        description: '',
         state: 'draft',
-        tags: [],
         img: 'image'
       }
     };
@@ -44,10 +46,6 @@ export default {
     ...mapGetters(['drawLength'])
   },
   methods: {
-    addTag(e) {
-      this.meta.tags.push({ value: '' });
-    },
-
     uploadFile(e) {
       let files = e.target.files;
       let reader = new FileReader();
@@ -61,7 +59,7 @@ export default {
       if (this.image == '') alert('Please add an image first');
       else {
         axios
-          .post('http://localhost:4200/api/drawings', this.meta)
+          .post('/drawings', this.meta)
           .then(response => console.log('success?'))
           .catch(e => console.error(e));
       }
@@ -72,8 +70,8 @@ export default {
 </script>
 
 <style>
-	.upload {
-		width: 200px;
-		height: 200px;
-	}
+.upload {
+  width: 200px;
+  height: 200px;
+}
 </style>

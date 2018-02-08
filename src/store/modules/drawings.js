@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../services/axios';
 
 const state = {
   selected: 'none',
@@ -13,7 +13,7 @@ const getters = {
 
 const actions = {
   getDrawings({ commit }) {
-    return axios.get('http://localhost:4200/api/drawings').then(d => {
+    return axios.get('/drawings').then(d => {
       commit('fetchDrawings', d);
     });
   }
@@ -22,7 +22,7 @@ const actions = {
 const mutations = {
   fetchDrawings: (state, d) => {
     console.log('Should be updated', d.data.length);
-    d.data.forEach(e => e.path = `http://localhost:4200/${e.path}`)
+    d.data.forEach(e => e.fpath = `http://localhost:4200/${e.path}`)
     state.all = d.data;
   },
   selectDrawing: (state, d) => {

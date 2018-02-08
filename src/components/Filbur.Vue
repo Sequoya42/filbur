@@ -1,8 +1,11 @@
   <template>
 <div>
 	<h1>Filbur!</h1>
-	<h6>{{verified}}</h6>
 <div v-if="verified">
+	<Upload></Upload>
+	<v-spacer></v-spacer>
+	<hr />
+	<Update></Update>
 	Stuff upload and update
 </div>
 <div v-else
@@ -11,7 +14,7 @@
 		<input type="password"
 		placeholder="Toto"
 		class="test"
-			v-model="password" />
+		v-model="password" />
 	</form>
 </div>
 </div>
@@ -19,7 +22,10 @@
 
 <script>
 // import { mapGetters, mapActions } from 'vuex';
-import axios from 'axios';
+import axios from '../services/axios';
+import Upload from './uploadDrawing';
+import Update from './updateDrawing';
+
 export default {
   name: 'Filbur',
   created() {
@@ -34,21 +40,28 @@ export default {
   computed: {},
   methods: {
     worthy() {
+      console.log('should be called')
       axios
-        .post('http://localhost:4200/secretStuff/pass', {
+        .post('/secretStuff/pass', {
           stuff: this.password
         })
         .then(res => {
-          console.log(res.data)
-          if (res.data == 'success') this.verified = true;
+          console.log('WESH')
+          console.log(res.data.filbur)
+          this.$store.dispatch('setFilbur', res.data.filbur)
+          if (res.data.filbur) this.verified = true;
           else {
+            this.password = ''
             alert(res.data);
           }
         })
         .catch(e => console.error(e));
     }
   },
-  components: {},
+  components: {
+    Upload,
+    Update,
+  },
 }
 </script>
 

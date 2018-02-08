@@ -7,7 +7,7 @@ let router = express.Router();
 
 router.use('/api', require('./drawings'));
 
-router.use('/secretStuff', require('./pass'));
+router.use('/api/secretStuff', require('./pass'));
 
 router.get('*', (req, res) => {
   res.send('Nope');

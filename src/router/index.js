@@ -2,12 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Presentation from '@/components/Presentation';
 import Drawings from '@/components/Drawings';
-import Upload from '@/components/upload';
-import Update from '@/components/update';
+import Upload from '@/components/uploadDrawing';
+import Update from '@/components/updateDrawing';
 import Filbur from '@/components/Filbur';
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [{
       path: '/',
       name: 'Presentation',
@@ -21,22 +22,41 @@ export default new Router({
     {
       path: '/upload',
       name: 'upload',
-      component: Upload
+      component: Upload,
+      meta: { requiresAuth: true }
     },
     {
       path: '/update',
       name: 'update',
-      component: Update
+      component: Update,
+      meta: { requiresAuth: true }
     },
     {
       path: '/Filbur',
       name: 'Filbur',
-      component: Filbur
+      component: Filbur,
     },
     {
       path: '*',
-      name: '404',
-      component: Presentation
+      redirect: { name: 'Presentation' }
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const logged = localStorage.getItem('filbur');
+    if (!logged) {
+      next({
+        name: 'Presentation',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
+export default router;

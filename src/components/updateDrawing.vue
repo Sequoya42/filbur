@@ -5,11 +5,17 @@
 
     <div class="flex-container">
       <img class="thumb"
-        :src="drawing.path" />
-      <input v-model="drawing.name" />
+        :src="drawing.fpath" /> Name <input class="test"
+        v-model="drawing.name" /> Category
+      <input class="test"
+        v-model="drawing.category" /> Description
+      <input class="test"
+        v-model="drawing.description" />
 
-      <button @click="update(drawing)">Update</button>
-      <button @click="remove(drawing)">delete</button>
+      <button class="green"
+        @click="update(drawing)">Update</button>
+      <button class="red flat"
+        @click="remove(drawing)">delete</button>
     </div>
   </div>
 
@@ -20,40 +26,38 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../services/axios';
 export default {
   name: 'updateDrawing',
 
   beforeCreate() {
-    axios.get('http://localhost:4200/api/drawings').then(d => {
-      d.data.forEach(e => e.path = `http://localhost:4200/${e.path}`)
-
+    axios.get('/drawings').then(d => {
+      d.data.forEach(e => e.fpath = `http://localhost:4200/${e.path}`)
       this.drawings = d.data;
     });
   },
   data: function() {
     return {
-      drawings: {
-        name: 'tryout'
-      }
+      drawings: {}
     };
   },
   computed: {},
   methods: {
     update(e) {
       axios
-        .put('http://localhost:4200/api/drawings', {
+        .put('/drawings', {
           name: e.name,
+          filename: e.filename,
           path: e.path,
-          state: e.state,
-          tags: e.tags
+          category: e.category,
+          description: e.description
         })
         .then(response => console.log('success?'))
         .catch(e => console.error(e));
     },
     remove(e) {
       axios
-        .delete('http://localhost:4200/api/drawings', {
+        .delete('/drawings', {
           params: {
             name: e.name,
             jpg: e.path.split('/d/')[1]
@@ -61,7 +65,7 @@ export default {
         })
         .then(response => {
           this.$store.dispatch('getDrawings');
-          axios.get('http://localhost:4200/api/drawings').then(d => {
+          axios.get('/drawings').then(d => {
             this.drawings = d.data;
           });
           console.log('success?');
@@ -74,6 +78,11 @@ export default {
 </script>
 
 <style>
+.test {
+  background-color: white;
+  color: black;
+}
+
 .thumb {
   width: 200px;
   height: 200px;
