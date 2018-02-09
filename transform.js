@@ -23,13 +23,15 @@ module.exports = getFiles;
 */
 
 fs.readdirSync('./server/assets')
+  .filter(file => path.extname(file) == '.jpg' || path.extname(file) == '.JPG')
   .forEach((e, i) => {
     let name = e.split('.')[0];
-    console.log(name)
     let file = {
       name,
       filename: `${name}.json`,
       path: e,
+      width: '340px',
+      height: '220px',
       category: 'erosion',
       description: '',
     }

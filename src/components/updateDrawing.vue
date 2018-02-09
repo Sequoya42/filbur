@@ -45,13 +45,7 @@ export default {
   methods: {
     update(e) {
       axios
-        .put('/drawings', {
-          name: e.name,
-          filename: e.filename,
-          path: e.path,
-          category: e.category,
-          description: e.description
-        })
+        .put('/drawings', e)
         .then(response => console.log('success?'))
         .catch(e => console.error(e));
     },

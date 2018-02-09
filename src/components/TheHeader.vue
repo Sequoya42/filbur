@@ -4,7 +4,7 @@
     @click="redirect('Presentation')">The Amazing Britte</v-btn>
   <v-spacer></v-spacer>
   <v-btn flat
-    @click="redirect('Drawings')">Chef-Oeuvres</v-btn>
+    @click="redirect('Drawings')">Oeuvres</v-btn>
 
 </v-toolbar>
 </template>

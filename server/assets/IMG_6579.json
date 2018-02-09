@@ -1,1 +1,10 @@
-{"name":"IMG_6579","filename":"IMG_6579.json","path":"IMG_6579.JPG","category":"erosion","description":""}
+{
+  "name": "IMG_6579",
+  "filename": "IMG_6579.json",
+  "path": "IMG_6579.jpg",
+  "width": "340px",
+  "height": "220px",
+  "category": "Résilience",
+  "description": "Printmaking / Linoleum Spoon print 300 x 2000 cm",
+  "fpath": "http://localhost:4200/IMG_6579.jpg"
+}

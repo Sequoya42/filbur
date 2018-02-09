@@ -1,16 +1,26 @@
 <template>
-<v-layout>
-  <drawingList :drawings="getAll"></drawingList>
-</v-layout>
+<v-flex>
+  <v-menu offset-y>
+    <v-btn slot="activator">Categories</v-btn>
+    <v-list>
+      <v-list-tile v-for="i in categories"
+        :value="choice == i"
+        :key="i"
+        @click="test(i)">
+        <v-list-tile-title> {{i}}</v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+  </v-menu>
+  <drawingList :drawings="filtered"></drawingList>
+</v-flex>
 </template>
 
 <script>
-import drawingKeep from './drawingKeep.vue';
 import drawingList from './drawingList.vue';
 
 import {
   mapGetters,
-  mapMutations
+  mapActions
 } from 'vuex';
 
 export default {
@@ -21,34 +31,26 @@ export default {
 
   data: function() {
     return {
-      choice: 'keep'
+      choice: 'all'
     };
   },
   computed: {
-    ...mapGetters(['getAll', 'selected'])
+    ...mapGetters(['filtered', 'selected', 'categories']),
   },
   methods: {
-    ...mapMutations(['selectDrawing'])
+    ...mapActions(['selectDrawing', 'filterByCat']),
+    test(d) {
+      this.choice = d;
+      this.filterByCat(d);
+    }
   },
   components: {
     drawingList,
-    drawingKeep
   }
 };
 </script>
 
 <style>
-.choiceBar {
-  justify-content: center;
-}
-
-.selectedContainer {
-  margin-bottom: 2vh;
-  margin-left: 5vw;
-  margin-right: 5vw;
-  background-color: black;
-}
-
 .selectedStuff {
   /*max-width: 90vw;*/
   max-height: 80vh;
