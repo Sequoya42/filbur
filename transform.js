@@ -33,6 +33,7 @@ fs.readdirSync('./server/assets')
       name,
       filename: `${name}.json`,
       path: e,
+      size: "xs12",
       width: '340px',
       height: '220px',
       category: 'erosion',

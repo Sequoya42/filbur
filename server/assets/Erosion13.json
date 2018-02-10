@@ -1,9 +1,1 @@
-{
-  "name": "Erosion13",
-  "filename": "Erosion13.json",
-  "path": "Erosion13.jpg",
-  "width": "340px",
-  "height": "220px",
-  "category": "erosion",
-  "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
-}
+{"name":"Erosion13","filename":"Erosion13.json","path":"Erosion13.jpg","size":"xs12","width":"340px","height":"220px","category":"erosion","description":""}

@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container fluid>
   <v-flex style="padding:100px">
     <h1>{{$route.params.name}}</h1></v-flex>
   <drawingList :drawings="filtered"></drawingList>

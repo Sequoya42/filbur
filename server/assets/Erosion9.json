@@ -1,1 +1,10 @@
-{"name":"Erosion9","filename":"Erosion9.json","path":"Erosion9.jpg","width":"340px","height":"220px","category":"erosion","description":""}
+{
+  "name": "Erosion9",
+  "filename": "Erosion9.json",
+  "path": "Erosion9.jpg",
+  "size": "xs12",
+  "width": "340px",
+  "height": "220px",
+  "category": "erosion",
+  "description": ""
+}

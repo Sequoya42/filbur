@@ -1,27 +1,27 @@
 <template>
-<v-container style="padding-top:100px"
-  debug3
-  grid-list-md
-  text-xs-center>
+<v-container fluid
+  style="padding-top:100px"
+  class="debug3"
+  grid-list-xl>
   <drawingModal v-if="show"
     v-on:close="show=false"
     :img="selected"></drawingModal>
   <v-layout v-else
-    debug2
-    row
-    justify-center
+    class="debug2"
+    style="justify-content: space-between;"
     wrap>
-    <transition-group style="style:flex: 1 0 0"
-      name="list">
-      <v-flex class="xs6"
-        :height="d.height"
-        :width="d.width"
+    <transition-group name="list"
+      class="debug">
+      <v-flex xs6
+        class="test"
+        style="padding: 100px"
         v-for="(d, index) in drawings"
         :key="d.name">
-        <v-card>
+        <v-card ripple
+          raised>
           <v-card-media :src="d.fpath"
-            contain
-            :height="d.height">
+            height="80vh"
+            contain>
           </v-card-media>
           <v-card-title primary-title>
             <h2>{{d.name}}</h2>
