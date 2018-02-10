@@ -1,16 +1,33 @@
 <template>
-<v-toolbar class="choiceBar">
+<v-toolbar fixed
+  app
+  class="choiceBar">
   <v-btn flat
     @click="redirect('Presentation')">The Amazing Britte</v-btn>
   <v-spacer></v-spacer>
-  <v-btn flat
-    @click="redirect('Drawings')">Oeuvres</v-btn>
+
+  <v-menu>
+    <v-btn slot="activator">Oeuvres</v-btn>
+    <v-list>
+      <v-list-tile v-for="i in categories"
+        :value="choice == i"
+        :key="i"
+        @click="test(i)">
+        <v-list-tile-title> {{i}}</v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+  </v-menu>
+  <!-- <v-btn flat
+    @click="redirect('Drawings')">Oeuvres</v-btn> -->
 
 </v-toolbar>
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex';
+import {
+  mapGetters,
+  mapActions
+} from 'vuex';
 import mixins from '../mixins.js';
 
 export default {
@@ -18,10 +35,25 @@ export default {
   mixins: [mixins],
 
   data: function() {
-    return {};
+    return {
+      choice: this.$route.params.name || 'all'
+    };
   },
-  computed: {},
-  methods: {},
+  computed: {
+    ...mapGetters(['categories'])
+  },
+  methods: {
+    test(d) {
+      this.choice = d;
+      this.$store.dispatch('filterByCat', d);
+      this.$router.push({
+        name: 'Drawings',
+        params: {
+          name: d
+        }
+      })
+    }
+  },
   components: {}
 };
 </script>

@@ -1,18 +1,9 @@
 <template>
-<v-flex>
-  <v-menu offset-y>
-    <v-btn slot="activator">Categories</v-btn>
-    <v-list>
-      <v-list-tile v-for="i in categories"
-        :value="choice == i"
-        :key="i"
-        @click="test(i)">
-        <v-list-tile-title> {{i}}</v-list-tile-title>
-      </v-list-tile>
-    </v-list>
-  </v-menu>
+<v-container>
+  <v-flex style="padding:100px">
+    <h1>{{$route.params.name}}</h1></v-flex>
   <drawingList :drawings="filtered"></drawingList>
-</v-flex>
+</v-container>
 </template>
 
 <script>
@@ -25,23 +16,18 @@ import {
 
 export default {
   name: 'Drawings',
-  created() {
-    this.$store.dispatch('getDrawings');
-  },
 
   data: function() {
-    return {
-      choice: 'all'
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(['filtered', 'selected', 'categories']),
+    filtered() {
+      return this.$store.getters.filtered
+    }
   },
   methods: {
-    ...mapActions(['selectDrawing', 'filterByCat']),
-    test(d) {
-      this.choice = d;
-      this.filterByCat(d);
+    filterByCat() {
+      this.$store.dispatch('filterByCat')
     }
   },
   components: {

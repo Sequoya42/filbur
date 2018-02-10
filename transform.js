@@ -21,7 +21,10 @@ const getFiles = () => {
 module.exports = getFiles;
 
 */
-
+//TODO
+/*
+	change width/height to size [xs1-12]
+*/
 fs.readdirSync('./server/assets')
   .filter(file => path.extname(file) == '.jpg' || path.extname(file) == '.JPG')
   .forEach((e, i) => {

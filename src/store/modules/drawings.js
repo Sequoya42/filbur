@@ -17,10 +17,8 @@ const getters = {
 };
 
 const actions = {
-  getDrawings({ commit }) {
-    return axios.get('/drawings').then(d => {
-      commit('fetch_drawings', d);
-    });
+  async getDrawings({ commit }) {
+    commit('fetch_drawings', await axios.get('/drawings'));
   },
 
   selectDrawing({ commit }, d) {

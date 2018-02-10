@@ -5,8 +5,16 @@ import Drawings from '@/components/Drawings';
 import Upload from '@/components/uploadDrawing';
 import Update from '@/components/updateDrawing';
 import Filbur from '@/components/Filbur';
-Vue.use(Router);
+import store from '@/store';
 
+Vue.use(Router);
+// TODO
+/*
+	update resizable/orderable
+	Aspect ratio
+	multiple per lign
+	nicer upload
+*/
 const router = new Router({
   mode: 'history',
   routes: [{
@@ -15,9 +23,13 @@ const router = new Router({
       component: Presentation
     },
     {
-      path: '/drawings',
+      path: '/oeuvres/:name',
       name: 'Drawings',
-      component: Drawings
+      component: Drawings,
+      beforeEnter: (to, from, next) => {
+        store.dispatch('filterByCat', to.params.name);
+        next();
+      }
     },
     {
       path: '/upload',

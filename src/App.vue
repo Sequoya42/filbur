@@ -13,9 +13,6 @@ import TheHeader from './components/TheHeader';
 export default {
   name: 'app',
 
-  created() {
-    this.$store.dispatch('getDrawings');
-  },
   components: {
     TheHeader
   }

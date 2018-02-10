@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container style="padding-top:100px">
   <br />
   <v-layout offset-xs6>
     <v-flex xs8

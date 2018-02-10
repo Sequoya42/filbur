@@ -8,9 +8,11 @@
         :src="drawing.fpath" /> Name <input class="test"
         v-model="drawing.name" /> Category
       <input class="test"
-        v-model="drawing.category" /> Description
-      <input class="test"
-        v-model="drawing.description" />
+        v-model="drawing.category" />
+      <v-text-area class="test"
+        v-model="drawing.description">
+        Description
+      </v-text-area>
 
       <button class="green"
         @click="update(drawing)">Update</button>

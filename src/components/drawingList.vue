@@ -1,25 +1,37 @@
 <template>
-<v-container fluid
-  style="min-height: 0;"
-  grid-list-xl>
+<v-container style="padding-top:100px"
+  debug3
+  grid-list-md
+  text-xs-center>
   <drawingModal v-if="show"
     v-on:close="show=false"
     :img="selected"></drawingModal>
-  <v-layout row
-    v-else
-    wrap
-    v-for="(d, index) in drawings"
-    :key="d.key">
-    <v-flex class="testWesh"
-      wrap
-      text-xs-center>
-      <img :src="d.fpath"
-        height="90%"
-        width="90%"
-        @click="testModal(d.fpath)" />
-      <h2>{{d.name}}</h2>
-      <h4>{{d.description}}</h4>
-    </v-flex>
+  <v-layout v-else
+    debug2
+    row
+    justify-center
+    wrap>
+    <transition-group style="style:flex: 1 0 0"
+      name="list">
+      <v-flex class="xs6"
+        :height="d.height"
+        :width="d.width"
+        v-for="(d, index) in drawings"
+        :key="d.name">
+        <v-card>
+          <v-card-media :src="d.fpath"
+            contain
+            :height="d.height">
+          </v-card-media>
+          <v-card-title primary-title>
+            <h2>{{d.name}}</h2>
+          </v-card-title>
+          <v-card-text>
+            <h4>{{d.description}}</h4>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </transition-group>
   </v-layout>
 </v-container>
 </template>
@@ -53,35 +65,44 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  /*border: 5px solid var(--cyan);*/
-  box-shadow: auto red;
-  padding: 5px;
-  margin: 5px;
+.thumb {
+  width: inherit !important;
+  /* max-width: 50vw;
+  max-height: 80vh; */
 }
 
-.card img {
-  height: 30vh;
-  max-height: 40vh;
-  width: auto;
+
+/* from : http://taha-sh.com/blog/the-ridiculously-easy-way-to-animate-your-applications-with-vuejs */
+
+.list {
+  backface-visibility: hidden;
+  z-index: 1;
 }
 
-.testWesh {
-  max-height: 40vh;
-  width: auto;
-  max-width: 60vw;
+/* moving */
+
+.list-move {
+  transition: all 800ms ease-in-out 50ms;
 }
 
-.fade-enter-active {
-  transition: opacity .5s;
+/* appearing */
+
+.list-enter-active {
+  transition: all 800ms ease-out;
 }
 
-.fade-leave-active {
-  transition: opacity .2s;
+/* disappearing */
+
+.list-leave-active {
+  transition: all 800ms ease-in;
+  /* position: absolute; */
+  /* z-index: 0; */
 }
 
-.fade-enter,
-.fade-leave-to {
-  opacity: 0
+/* appear at / disappear to */
+
+.list-enter,
+.list-leave-to {
+  opacity: 0;
 }
 </style>
