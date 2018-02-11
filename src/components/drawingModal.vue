@@ -1,8 +1,7 @@
   <template>
-<div>
-	<img class="Argh"
-	:src="img" @click="$emit('close')" />
-</div>
+<v-card>
+	<v-card-media class='drawing' :src="img" contain height="90vh" @click="$emit('close')"></v-card-media>
+</v-card>
 </template>
 
 <script>

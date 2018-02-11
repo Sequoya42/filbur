@@ -1,7 +1,8 @@
 .debug {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .debug2 {
@@ -11,4 +12,8 @@
 
 .debug3 {
   border: 5px solid yellow;
+}
+
+.drawing {
+  background-color: #303030 !important;
 }

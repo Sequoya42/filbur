@@ -1,6 +1,5 @@
   <template>
-<div>
-	<h1>Filbur!</h1>
+<v-layout align-center justify-center>
 <div v-if="verified">
 	<Upload></Upload>
 	<v-spacer></v-spacer>
@@ -8,7 +7,7 @@
 	<Update></Update>
 	Stuff upload and update
 </div>
-<div v-else
+<v-flex v-else
 	class="form">
 	<form @submit.prevent="worthy">
 		<input type="password"
@@ -16,12 +15,11 @@
 		class="test"
 		v-model="password" />
 	</form>
-</div>
-</div>
+</v-flex>
+</v-layout>
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex';
 import axios from '../services/axios';
 import Upload from './uploadDrawing';
 import Update from './updateDrawing';
@@ -29,6 +27,7 @@ import Update from './updateDrawing';
 export default {
   name: 'Filbur',
   created() {
+    console.log('filbur')
     this.password = '';
   },
 
