@@ -1,10 +1,20 @@
+//TODO look v-speed-dial
+
 <template>
 <v-container class="debug3"
   fluid
   style="width:100vw">
   <h1>{{updated}}</h1>
   <v-btn color="green"
-    @click="updateDrawings()">SAVE CHANGES</v-btn>
+    @click="updateDrawingsAndSave">SAVE CHANGES</v-btn>
+  <v-snackbar :timeout="2000"
+    v-model="saved"
+    color="blue"
+    top>
+    <p>
+      Succesfully Saved
+    </p>
+  </v-snackbar>
   <v-menu>
     <v-btn slot="activator">Categories</v-btn>
     <v-list>
@@ -21,7 +31,7 @@
     class="debug2"
     wrap>
     <draggable v-model='drawings'
-      class="debug">
+      class="flex-transition">
       <v-flex v-for="(drawing, index) in drawings"
         :key="index"
         :class="[ 'xs'+ drawing.size]"
@@ -35,11 +45,13 @@
             hint="name"
             persistent-hint
             :value="drawing.name"
+            clearable
             @input="updateItem({index: drawing.order, value: $event,field: 'name'})">
           </v-text-field>
           <v-text-field single-line
             hint="category"
             persistent-hint
+            clearable
             :value="drawing.category"
             @input="updateItem({index: drawing.order, value: $event,field: 'category'})">
           </v-text-field>
@@ -55,10 +67,11 @@
           <v-text-field multi-line
             hint="description"
             persistent-hint
+            clearable
             :value="drawing.description"
             @input="updateItem({index: drawing.order, value: $event,field: 'description'})">
           </v-text-field>
-          <v-btn @click="remove(drawing)">delete</v-btn>
+          <v-btn @click="removeItem(drawing)">delete</v-btn>
         </v-card>
       </v-flex>
     </draggable>
@@ -82,13 +95,14 @@ export default {
   data: function() {
     return {
       choice: 'all',
+      saved: false
     };
   },
   computed: {
     ...mapGetters({
       categories: 'categories',
       filtered: 'filtered',
-      updated: 'updated'
+      updated: 'updated',
     }),
     drawings: {
       get() {
@@ -98,23 +112,16 @@ export default {
         value = value.map(e => e.order)
         this.$store.dispatch('newOrder', value)
       }
-    }
+    },
   },
+
   methods: {
-    ...mapActions(['filterByCat', 'updateDrawings', 'updateItem']),
-    remove(e) {
-      axios
-        .delete('/drawings', {
-          params: {
-            name: e.name,
-            jpg: e.path.split('/d/')[1]
-          }
-        })
-        .then(response => {
-          console.log('success?');
-        })
-        .catch(e => console.error(e));
-    }
+    ...mapActions(['filterByCat', 'updateDrawings', 'updateItem', 'removeItem']),
+
+    updateDrawingsAndSave() {
+      this.updateDrawings();
+      this.saved = true;
+    },
   },
   components: {
     draggable

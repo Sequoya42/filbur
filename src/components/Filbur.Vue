@@ -27,7 +27,7 @@ import Update from './updateDrawing';
 export default {
   name: 'Filbur',
   created() {
-    console.log('filbur')
+    this.verified = localStorage.getItem('filbur');
     this.password = '';
   },
 

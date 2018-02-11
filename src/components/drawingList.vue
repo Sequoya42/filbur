@@ -1,18 +1,15 @@
 <template>
 <v-container pt-5
-  fluid
-  class="debug3">
+  fluid>
   <drawingModal v-if="show"
     v-on:close="show=false"
     :img="selected"></drawingModal>
   <v-layout v-else
-    class="debug2"
     wrap>
     <transition-group name="list"
-      class="debug">
+      class="flex-transition">
       <v-flex :class="['drawing', 'xs'+d.size]"
         v-for="(d, index) in drawings"
-        class="debug3"
         :key="d.name">
         <v-card class="drawing">
           <v-card-media :src="d.fpath"
@@ -23,7 +20,7 @@
           <v-card-title primary-title>
             <h2>{{d.name}}</h2>
           </v-card-title>
-          <v-card-text>order: {{d.order}}</v-card-text>
+          <v-card-text>{{d.description}}</v-card-text>
           <v-card-text>
             <h4>{{d.description}}</h4>
           </v-card-text>

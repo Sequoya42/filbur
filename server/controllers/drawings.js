@@ -12,7 +12,7 @@ exports.fetch = (req, res, next) => {
 exports.del = (req, res, next) => {
   const name = req.query.name;
   const jpg = req.query.jpg;
-  let jsonFile = `./assets/${name}.json`;
+  let jsonFile = `./assets/${name}`;
   let jpgFile = `./assets/${jpg}`;
   console.log(jsonFile);
   console.log(jpgFile);

@@ -24,26 +24,6 @@
     </v-flex>
   </v-layout>
 </v-container>
-<!--
-<div>
-  <h1>there</h1><br />
-  <img v-if="image != ''"
-    :src="image"
-    class="upload" />
-  <br />
-  <h1>newdata above</h1>
-  <form>
-    <input type="file"
-      @change="uploadFile" />
-    <input v-model="meta.name"
-      placeholder="name" />
-    <input v-model="meta.category"
-      placeholder="category" />
-    <input v-model="meta.description"
-      placeholder="description" />
-    <button @click="send">Submit</button>
-  </form>
-</div> -->
 </template>
 
 <script>

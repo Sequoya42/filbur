@@ -6,7 +6,8 @@ const state = {
   filtered: [],
   updated: [],
   order: [],
-  categories: []
+  categories: [],
+  saved: false
 };
 
 const getters = {
@@ -17,6 +18,7 @@ const getters = {
   categories: state => state.categories,
   order: state => state.order,
   updated: state => state.updated,
+  saved: state => state.saved,
 };
 
 const actions = {
@@ -37,6 +39,18 @@ const actions = {
       let y = await axios.put('/drawings', e);
     });
     await axios.put('/drawings', { filename: 'only_for_order_of_drawing.json', order: state.order })
+    commit('mark_saved');
+  },
+
+  async removeItem({ commit }, d) {
+    console.log('removeitem', d)
+    await axios.delete('drawings', {
+      params: {
+        name: d.filename,
+        jpg: d.path
+      }
+    });
+    commit('remove_item', d);
   },
 
   newOrder({ commit }, value) {
@@ -55,6 +69,10 @@ const actions = {
     commit('update_item', d);
   },
 
+  markSaved({ commit }) {
+    commit('mark_saved');
+  },
+
 };
 
 
@@ -63,6 +81,10 @@ const mutations = {
     const orderDrawing = (a, b) => state.order.indexOf(a.order) - state.order.indexOf(b.order);
     state.order = d;
     state.all = state.all.sort(orderDrawing)
+  },
+
+  mark_saved: (state) => {
+    state.saved == !state.saved;
   },
 
   fetch_drawings: (state, d) => {
@@ -83,6 +105,13 @@ const mutations = {
         e[d.field] = d.value;
       }
     })
+    state.categories = state.all.map(e => e.category);
+    state.categories.unshift('all');
+    state.categories = state.categories.filter((e, i) => state.categories.indexOf(e) == i)
+  },
+
+  remove_item: (state, d) => {
+    state.filtered = state.filtered.filter(e => e.filename !== d.filename)
   },
 
   select_drawing: (state, d) => {

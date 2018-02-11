@@ -1,6 +1,6 @@
   <template>
 <v-card>
-	<v-card-media class='drawing' :src="img" contain height="90vh" @click="$emit('close')"></v-card-media>
+	<v-card-media class='drawing' :src="img" contain height="86vh" @click="$emit('close')"></v-card-media>
 </v-card>
 </template>
 
