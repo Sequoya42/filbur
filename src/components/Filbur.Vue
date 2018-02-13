@@ -28,6 +28,8 @@ export default {
   name: 'Filbur',
   created() {
     this.verified = localStorage.getItem('filbur');
+    if (this.verified)
+      this.$store.dispatch('setFilbur', this.verified);
     this.password = '';
   },
 
@@ -45,8 +47,6 @@ export default {
           stuff: this.password
         })
         .then(res => {
-          console.log('WESH')
-          console.log(res.data.filbur)
           this.$store.dispatch('setFilbur', res.data.filbur)
           if (res.data.filbur) this.verified = true;
           else {

@@ -1,8 +1,13 @@
-.flex-transition {
+.rs-flex {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-around;
+  align-items: center;
+}
+
+.rs-test {
+  justify-content: space-evenly;
 }
 
 .debug2 {
@@ -16,4 +21,6 @@
 
 .drawing {
   background-color: #303030 !important;
+  margin: 2vh;
+  padding: 2vh;
 }

@@ -13,6 +13,7 @@ export default new Vuex.Store({
   },
   actions: {
     setFilbur: ({ commit }, t) => {
+      console.log('setFilbur called');
       localStorage.setItem('filbur', t);
       commit('set_filbur');
       axios.defaults.headers.common['authorization'] = localStorage.getItem('filbur');

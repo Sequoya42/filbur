@@ -7,23 +7,28 @@
   <v-layout v-else
     wrap>
     <transition-group name="list"
-      class="flex-transition">
-      <v-flex :class="['drawing', 'xs'+d.size]"
+      class="rs-flex">
+      <v-flex :class="['xs'+d.size]"
         v-for="(d, index) in drawings"
         :key="d.name">
-        <v-card class="drawing">
+        <v-card class="drawing"
+          flat>
           <v-card-media :src="d.fpath"
             :height="(d.size * 6.5) + 'vh'"
             @click='testModal(d.fpath)'
             contain>
           </v-card-media>
-          <v-card-title primary-title>
-            <h2>{{d.name}}</h2>
+          <v-card-title primary-title
+            class="rs-test">
+            <h3>
+              {{d.name}}
+            </h3>
           </v-card-title>
-          <v-card-text>{{d.description}}</v-card-text>
-          <v-card-text>
-            <h4>{{d.description}}</h4>
-          </v-card-text>
+          <v-card-title>
+            <h5>
+							{{d.description}}
+						</h5>
+          </v-card-title>
         </v-card>
       </v-flex>
     </transition-group>

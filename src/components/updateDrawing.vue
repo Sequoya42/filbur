@@ -1,12 +1,9 @@
 //TODO look v-speed-dial
 
 <template>
-<v-container class="debug3"
-  fluid
+<v-container fluid
   style="width:100vw">
   <h1>{{updated}}</h1>
-  <v-btn color="green"
-    @click="updateDrawingsAndSave">SAVE CHANGES</v-btn>
   <v-snackbar :timeout="2000"
     v-model="saved"
     color="blue"
@@ -28,10 +25,9 @@
   </v-menu>
 
   <v-layout justify-center
-    class="debug2"
     wrap>
     <draggable v-model='drawings'
-      class="flex-transition">
+      class="rs-flex">
       <v-flex v-for="(drawing, index) in drawings"
         :key="index"
         :class="[ 'xs'+ drawing.size]"
@@ -76,6 +72,15 @@
       </v-flex>
     </draggable>
   </v-layout>
+  <v-btn color="green"
+    fixed
+    dark
+    bottom
+    fab
+    large
+    right
+    @click="updateDrawingsAndSave">SAVE</v-btn>
+
 </v-container>
 </template>
 
