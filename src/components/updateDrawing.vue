@@ -1,8 +1,15 @@
-//TODO look v-speed-dial
-
 <template>
 <v-container fluid
   style="width:100vw">
+  <v-btn color="green"
+    fixed
+    dark
+    bottom
+    fab
+    large
+    right
+    @click="updateDrawingsAndSave">SAVE</v-btn>
+
   <h1>{{updated}}</h1>
   <v-snackbar :timeout="2000"
     v-model="saved"
@@ -23,7 +30,6 @@
       </v-list-tile>
     </v-list>
   </v-menu>
-
   <v-layout justify-center
     wrap>
     <draggable v-model='drawings'
@@ -72,15 +78,6 @@
       </v-flex>
     </draggable>
   </v-layout>
-  <v-btn color="green"
-    fixed
-    dark
-    bottom
-    fab
-    large
-    right
-    @click="updateDrawingsAndSave">SAVE</v-btn>
-
 </v-container>
 </template>
 
@@ -135,18 +132,4 @@ export default {
 </script>
 
 <style>
-.test {
-  background-color: white;
-  color: black;
-}
-
-.thumb {
-  width: 200px;
-  height: 200px;
-}
-
-.update {
-  width: 200px;
-  height: 200px;
-}
 </style>

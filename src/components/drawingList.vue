@@ -1,11 +1,18 @@
+//TODO modal appropriate position
+/*
+modal appropriate positition
+upload photos
+href /anchor photos
+*/
+
 <template>
 <v-container pt-5
   fluid>
   <drawingModal v-if="show"
     v-on:close="show=false"
+    :show="show"
     :img="selected"></drawingModal>
-  <v-layout v-else
-    wrap>
+  <v-layout wrap>
     <transition-group name="list"
       class="rs-flex">
       <v-flex :class="['xs'+d.size]"

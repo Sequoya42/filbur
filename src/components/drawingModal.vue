@@ -1,7 +1,12 @@
   <template>
-<v-card class="drawing" flat>
-	<v-card-media class='drawing' :src="img" contain height="86vh" @click="$emit('close')"></v-card-media>
+		<v-dialog
+			 v-model="dialog"
+			 transition="dialog-bottom-transition"
+			 >
+<v-card class="custom" flat>
+	<v-card-media class='drawing' :src="img" contain height="82vh" @click="$emit('close')"></v-card-media>
 </v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -9,9 +14,14 @@
 
 export default {
   name: 'drawingModal',
-  props: ['img'],
+  props: ['img', 'show'],
+  created() {
+    console.log("exist")
+  },
   data: function() {
-    return {}
+    return {
+      dialog: this.show
+    }
   },
   computed: {},
   methods: {},
@@ -20,9 +30,7 @@ export default {
 </script>
 
 <style scoped>
-.Argh {
-  width: 80vw;
-  max-height: 80vh;
-  height: auto;
+.custom {
+  background-color: #303030 !important;
 }
 </style>
