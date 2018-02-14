@@ -1,14 +1,6 @@
   <template>
 <v-layout align-center justify-center>
-<div v-if="verified">
-	<Upload></Upload>
-	<v-spacer></v-spacer>
-	<hr />
-	<Update></Update>
-	Stuff upload and update
-</div>
-<v-flex v-else
-	class="form">
+<v-flex class="form">
 	<form @submit.prevent="worthy">
 		<input type="password"
 		placeholder="Toto"
@@ -27,16 +19,10 @@ import Update from './updateDrawing';
 export default {
   name: 'Filbur',
   created() {
-    this.verified = localStorage.getItem('filbur');
-    if (this.verified)
-      this.$store.dispatch('setFilbur', this.verified);
-    this.password = '';
+    this.password = ''
   },
-
   data: function() {
-    return {
-      verified: false
-    }
+    return {}
   },
   computed: {},
   methods: {
@@ -48,13 +34,16 @@ export default {
         })
         .then(res => {
           this.$store.dispatch('setFilbur', res.data.filbur)
-          if (res.data.filbur) this.verified = true;
-          else {
+          if (res.data.filbur) {
+            this.$router.push({
+              name: 'BackOffice'
+            });
+          } else {
             this.password = ''
             alert(res.data);
           }
         })
-        .catch(e => console.error(e));
+        .catch(e => console.error('np'));
     }
   },
   components: {

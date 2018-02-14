@@ -1,10 +1,3 @@
-//TODO modal appropriate position
-/*
-modal appropriate positition
-upload photos
-href /anchor photos
-*/
-
 <template>
 <v-container pt-5
   fluid>
@@ -17,9 +10,9 @@ href /anchor photos
       class="rs-flex">
       <v-flex :class="['xs'+d.size]"
         v-for="(d, index) in drawings"
-        :key="d.name">
-        <v-card class="drawing"
-          flat>
+        :key="index">
+        <v-card flat
+          :class="['drawing']">
           <v-card-media :src="d.fpath"
             :height="(d.size * 6.5) + 'vh'"
             @click='testModal(d.fpath)'
@@ -27,15 +20,17 @@ href /anchor photos
           </v-card-media>
           <v-card-title primary-title
             class="rs-test">
-            <h3>
+            <h4>
               {{d.name}}
-            </h3>
+            </h4>
           </v-card-title>
-          <v-card-title>
+          <v-card-text>
+            <pre>
             <h5>
-							{{d.description}}
+{{d.description}}
 						</h5>
-          </v-card-title>
+					</pre>
+          </v-card-text>
         </v-card>
       </v-flex>
     </transition-group>
@@ -58,11 +53,8 @@ export default {
   computed: {},
   methods: {
     testModal(e) {
-      console.log("Should be called", e)
       this.selected = e;
-      console.log('this.selected', this.selected)
       this.show = !this.show;
-      console.log('this.show', this.show)
     }
   },
   components: {

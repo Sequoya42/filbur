@@ -12,6 +12,7 @@ const state = {
 
 const getters = {
   getAll: state => state.all,
+  getLength: state => state.all.length,
   filtered: state => state.filtered,
   drawLength: state => state.all.length,
   selected: state => state.selected,
@@ -37,13 +38,12 @@ const actions = {
     let x = state.all.filter(e => state.updated.indexOf(e.order) !== -1);
     await x.forEach(async function(e) {
       let y = await axios.put('/drawings', e);
-    });
+    })
     await axios.put('/drawings', { filename: 'only_for_order_of_drawing.json', order: state.order })
     commit('mark_saved');
   },
 
   async removeItem({ commit }, d) {
-    console.log('removeitem', d)
     await axios.delete('drawings', {
       params: {
         name: d.filename,
@@ -75,12 +75,20 @@ const actions = {
 
 };
 
+// ******** ********  Mutations  ******** ********
+
+const orderDrawing = d => (a, b) => d.indexOf(a.order) - d.indexOf(b.order);
+
 
 const mutations = {
   fill_order: (state, d) => {
-    const orderDrawing = (a, b) => state.order.indexOf(a.order) - state.order.indexOf(b.order);
+    state.order.forEach(e => {
+      if (d.indexOf(e) == -1)
+        d.push(e);
+    })
     state.order = d;
-    state.all = state.all.sort(orderDrawing)
+    state.all = state.all.sort(orderDrawing(state.order))
+    state.filtered = state.filtered.sort(orderDrawing(state.order));
   },
 
   mark_saved: (state) => {
@@ -88,11 +96,10 @@ const mutations = {
   },
 
   fetch_drawings: (state, d) => {
-    const orderDrawing = (a, b) => state.order.indexOf(a.order) - state.order.indexOf(b.order);
     d.data.forEach(e => e.fpath = `http://localhost:4200/${e.path}`)
-    state.all = d.data.sort(orderDrawing);
-    state.filtered = d.data;
-    state.categories = d.data.map(e => e.category);
+    state.all = d.data.sort(orderDrawing(state.order));
+    state.filtered = state.all;
+    state.categories = d.data.filter(e => e.category).map(e => e.category);
     state.categories.unshift('all');
     state.categories = state.categories.filter((e, i) => state.categories.indexOf(e) == i)
   },
@@ -106,7 +113,6 @@ const mutations = {
       }
     })
     state.categories = state.all.map(e => e.category);
-    state.categories.unshift('all');
     state.categories = state.categories.filter((e, i) => state.categories.indexOf(e) == i)
   },
 

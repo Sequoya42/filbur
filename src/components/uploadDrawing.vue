@@ -7,6 +7,8 @@
     justify-center>
     <v-flex>
       <v-card>
+        <v-card-title primary-title>
+          <h1>Upload new file</h1></v-card-title>
         <v-card-media v-if="image != ''"
           :src="image"
           contain
@@ -18,6 +20,7 @@
         <v-text-field label="category"
           v-model="meta.category"></v-text-field>
         <v-text-field label="description"
+          multi-line
           v-model="meta.description"></v-text-field>
         <v-btn @click="send">Submit</v-btn>
       </v-card>
@@ -35,8 +38,6 @@ import axios from '../services/axios';
 export default {
   name: 'uploadDrawing',
 
-  created() {},
-  //TODO do this with the updated fields
   data: function() {
     return {
       image: '',
@@ -64,9 +65,12 @@ export default {
     send() {
       if (this.image == '') alert('Please add an image first');
       else {
+        this.meta.filename = this.meta.name + '.json';
+        this.meta.path = this.meta.name + '.jpg';
+        this.meta.size = 4;
         axios
           .post('/drawings', this.meta)
-          .then(response => console.log('success?'))
+          .then(response => console.log(response))
           .catch(e => console.error(e));
       }
     }
@@ -75,7 +79,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .upload {
   width: 200px;
   height: 200px;

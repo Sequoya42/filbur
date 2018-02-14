@@ -9,4 +9,7 @@ router
   .delete(drawings.verify, drawings.del)
   .put(drawings.verify, drawings.modif);
 
+router.route('/verifyToken')
+  .get(drawings.verify);
+
 module.exports = router;

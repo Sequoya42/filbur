@@ -2,7 +2,12 @@ const fs = require('fs');
 const http = require('http');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const p = require('../bail/.ps.json');
+// const p = require('../bail/.ps.json');
+//For demo purposes, pass is the hash of 'demo'
+const p = {
+  pass: '$2a$10$Pc29LhoxRMF8992rrnb5yOLt1C31FwY9qB68n/.C0GoYO./2wCMj2'
+}
+
 
 exports.fetch = (req, res, next) => {
   let meta = require('../assets/metaDraw.js')();
@@ -29,35 +34,34 @@ exports.modif = (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-  const addMeta = (d, name) => {
-    fs.writeFileSync(name, JSON.stringify(d));
-  };
-
+  const order = require('../assets/only_for_order_of_drawing.json');
+  const max = Math.max(...order.order) + 1;
+  order.order.push(max);
   const data = req.body.img.replace(/^data:image\/\w+;base64,/, '');
   const buf = new Buffer(data, 'base64');
-  const newFile = `assets/${req.body.name}.jpg`;
+  const newImg = `assets/${req.body.name}.jpg`;
+  const newJson = `assets/${req.body.name}.json`;
   const metaFile = `${req.body.name}.jpg`;
-  fs.writeFileSync(newFile, buf);
-  addMeta({
-      name: req.body.name,
-      state: req.body.state,
-      tags: req.body.tags.map(e => e.value) || [],
-      path: metaFile
-    },
-    newFile.split('.')[0] + '.json'
-  );
-  res.send('Succesfully saved');
+  fs.writeFileSync(newImg, buf);
+  delete req.body.img;
+  req.body.order = max;
+  fs.writeFileSync(newJson, JSON.stringify(req.body));
+  fs.writeFileSync('assets/tmp_order.json', JSON.stringify(order));
+  fs.renameSync('assets/tmp_order.json', 'assets/only_for_order_of_drawing.json')
+  return res.send('Succesfully saved');
 };
 
 exports.verify = (req, res, next) => {
   const token = req.headers['authorization'];
   console.log('verify', token);
   if (!token) {
+    console.log('No token')
     return res.status(401).send({ auth: false, message: 'No token provided.' });
   }
-  jwt.verify(token, p.pass, (err, decoded) => {
+  jwt.verify(token, p.pass, function(err, decoded) {
     if (err) {
-      throw ['Jwt failed', err.message]
+      console.log('error token expired')
+      return res.status(401).send({ auth: false, message: 'Token expired' })
     }
     req.user = {};
     req.user.id = decoded.user_id;

@@ -8,7 +8,6 @@ import store from './store'
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/main.css';
 
-//TODO ref: http://kevinbritte.wixsite.com/kevinamazingbritte
 Vue.config.productionTip = false
 
 store.dispatch('getDrawings').then(() => {

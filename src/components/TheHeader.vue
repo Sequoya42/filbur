@@ -10,16 +10,14 @@
     <v-btn slot="activator">Oeuvres</v-btn>
     <v-list>
       <v-list-tile v-for="i in categories"
+        v-if="i !== 'all'"
         :value="choice == i"
         :key="i"
-        @click="test(i)">
+        @click="redirectFiltered(i)">
         <v-list-tile-title> {{i}}</v-list-tile-title>
       </v-list-tile>
     </v-list>
   </v-menu>
-  <!-- <v-btn flat
-    @click="redirect('Drawings')">Oeuvres</v-btn> -->
-
 </v-toolbar>
 </template>
 
@@ -43,13 +41,13 @@ export default {
     ...mapGetters(['categories'])
   },
   methods: {
-    test(d) {
+    redirectFiltered(d) {
       this.choice = d;
       this.$store.dispatch('filterByCat', d);
       this.$router.push({
         name: 'Drawings',
         params: {
-          name: d
+          category: d
         }
       })
     }
