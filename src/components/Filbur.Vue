@@ -3,7 +3,7 @@
 <v-flex class="form">
 	<form @submit.prevent="worthy">
 		<input type="password"
-		placeholder="Toto"
+		placeholder="demo"
 		class="test"
 		v-model="password" />
 	</form>

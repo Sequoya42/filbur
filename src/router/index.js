@@ -10,6 +10,8 @@ import store from '@/store';
 import axios from '@/services/axios';
 
 Vue.use(Router);
+
+// from the docs
 const scrollBehavior = function(to, from, savedPosition) {
   if (savedPosition) {
     // savedPosition is only available for popstate navigations.

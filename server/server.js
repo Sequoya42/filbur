@@ -17,13 +17,16 @@ app.use(function(req, res, next) {
   next();
 });
 
+
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static('assets'));
+
+app.use(express.static(path.join(__dirname, '../dist')));
+
 router.use(require('./routes'));
 app.use(router);
 
-// app.use(express.static(path.join(__dirname, '../dist')));
 
 app.listen(port, function(err) {
   if (err) {
