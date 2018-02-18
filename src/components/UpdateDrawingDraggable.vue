@@ -7,7 +7,7 @@
 					:key="index"
 					:class="[ 'xs'+ drawing.size]"
 					pa-3>
-					<v-card class="drawing" raised :id="drawing.name">
+					<v-card class="drawing" raised :id="drawing.name.replace(' ', '_')">
 						<v-card-media :height="(drawing.size * 2.5) + 'vh'"
 							contain
 							:src="drawing.fpath">

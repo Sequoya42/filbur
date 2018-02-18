@@ -11,8 +11,11 @@ npm install
 # build for production with minification
 npm run build
 
+#If you don't have nodemon installed globally
+npm i nodemon
 # start server
-nodemon server/server.js
+cd server
+nodemon server.js
 ```
 
 ```

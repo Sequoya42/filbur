@@ -97,7 +97,9 @@ const mutations = {
 
   fetch_drawings: (state, d) => {
     d.data.forEach(e => e.fpath = `http://localhost:4200/${e.path}`)
+
     state.all = d.data.sort(orderDrawing(state.order));
+    console.log('state.all', state.all)
     state.filtered = state.all;
     state.categories = d.data.filter(e => e.category).map(e => e.category);
     state.categories.unshift('all');

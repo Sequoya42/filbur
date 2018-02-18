@@ -20,12 +20,16 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-app.use(express.static('assets'));
+
+// app.use((req, res, next) => {
+//   console.log(req.url)
+//   next()
+// })
+app.use(express.static(path.join(__dirname, '/assets')));
 
 app.use(express.static(path.join(__dirname, '../dist')));
-
-router.use(require('./routes'));
 app.use(router);
+router.use(require('./routes'));
 
 
 app.listen(port, function(err) {

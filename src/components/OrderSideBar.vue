@@ -9,7 +9,7 @@
 					:key="index"
 					:class="[ 'xs'+ drawing.size]"
 					pa-3>
-					<v-card append :to="{hash: drawing.name}">
+					<v-card append :to="{hash: drawing.name.replace(' ', '_')}">
 						<v-card-media :src="drawing.fpath" height="20px" contain></v-card-media>
 						{{drawing.name}}
 					</v-card>
